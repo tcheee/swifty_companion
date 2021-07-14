@@ -1,22 +1,32 @@
 import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import React from 'react';
 import Header from '../shared/header';
-import Home from '../screens/home';
+import SelectUser from '../screens/selectUser';
+import Login from '../screens/login';
 import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
-  Home: {
-    screen: Home,
+  Login: {
+    screen: Login,
     navigationOptions: ({ navigation }) => {
       return {
-        headerTitle: () => <Header title='42 Looker' navigation={navigation} />
+        headerTitle: () => <Header title='Login to 42 Looker' />
+      }
+    }
+  },  
+  SelectUser: {
+    screen: SelectUser,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: () => <Header title='42 Looker' />
       }
     },
   },
   ReviewDetails: {
     screen: ReviewDetails,
     navigationOptions: {
-      title: 'User Details',
+      title: 'User',
     }
   },
 };
@@ -29,4 +39,4 @@ const HomeStack = createStackNavigator(screens, {
   }
 });
 
-export default HomeStack;
+export default createAppContainer(HomeStack);
