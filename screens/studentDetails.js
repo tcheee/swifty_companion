@@ -13,10 +13,24 @@ export default function ReviewDetails({ navigation }) {
   const image_url = info.image_url
   var projects = info.projects_users;
   const campus = info.campus
-  const location = campus[0].name
   const cursus = info.cursus_users
   const level = cursus[0].level
   const skills = cursus[0].skills
+
+  var campus_id;
+  var location;
+
+  info.campus_users.map((item) => {
+    if (item.is_primary == true) {
+      campus_id = item.campus_id;
+    }
+  });
+
+  campus.map((item) => {
+    if (item.id == campus_id) {
+      location = item.name
+    }
+  })
 
   projects.sort(function(a,b) {
     return new Date(b.updated_at) - new Date(a.updated_at)
