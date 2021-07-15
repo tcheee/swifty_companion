@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Header({ title }) {
+export default function Header({ title}) {
 
   return (
     <View style={styles.header}>
@@ -26,10 +25,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#333',
     letterSpacing: 1,
-  },
-  icon: {
-    position: 'absolute',
-    left: 16,
   },
   headerTitle: {
     flexDirection: 'row'

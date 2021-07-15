@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground} from 'react-native';
 import { globalStyles } from '../styles/global';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
-import { MaterialIcons } from '@expo/vector-icons';
 import FlatButton from '../shared/button.js';
 
 export default function Login({ navigation }) {
@@ -21,13 +20,49 @@ export default function Login({ navigation }) {
             console.log(code);
 
             WebBrowser.dismissBrowser();
-            navigation.navigate('SelectUser', {code: code})
+            navigation.navigate('Home', {code: code})
         })
       }
   
     return (
-    <View style={globalStyles.container}>
-        <FlatButton onPress={handleLogin} text='Login to 42 Intra' />
-    </View>
+    <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
+        <View style={globalStyles.container}>
+                <TouchableOpacity onPress={handleLogin}>
+                    <View style={styles.loginButton}>
+                        <Image source={require('../assets/42_Logo.png')} style={styles.headerImage} />
+                        <Text style={styles.loginButtonText}>Login</Text>
+                    </View>
+                </TouchableOpacity>
+        </View>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+    background: {
+        width: '100%',
+        height: '100%',
+    },
+    loginButton: {     
+        borderRadius: 8,
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        backgroundColor: '#00AFB1',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 200,
+        flexDirection: 'row',
+      },
+      loginButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: 16,
+        textAlign: 'center',
+      },
+      headerImage: {
+        width: 26,
+        height: 26,
+        marginHorizontal: 10
+      },
+  })

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, View, ImageBackground, ImageBackgroundBase} from 'react-native';
 import { globalStyles } from '../styles/global';
 import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../shared/card';
+import { TextInput, ActivityIndicator, Colors } from 'react-native-paper';
 import FlatButton from '../shared/button.js';
 
 export default function Home({ navigation }) {
   const code = navigation.getParam('code');
   const [login, setLogin] = useState('');
   const [token, setToken] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const POST_body = {
     'grant_type': 'authorization_code',
     'client_id': 'c0d296f87ad3d2fd9c1980da5f055fb4ee7fae41830be1f5d6985bea22b84a36',
@@ -122,20 +124,41 @@ export default function Home({ navigation }) {
   }
 
   const handleSubmit = async () => {
-    const token = await verifyToken()
-    const user = await getUserIdFrom42API(token)
-    const user_id = user[0].id
-    const info = await getUserInfoFrom42API(token, user_id)
-    navigation.navigate('ReviewDetails', {login: login, userInfo: info})
+    if (login != '') {
+      setIsLoading(true)
+      const token = await verifyToken()
+      const user = await getUserIdFrom42API(token)
+      const user_id = user[0].id
+      console.log(isLoading);
+      const info = await getUserInfoFrom42API(token, user_id)
+      setIsLoading(false)
+      navigation.navigate('ReviewDetails', {login: login, userInfo: info})
+    }
   }
 
   return (
-    <View style={globalStyles.container}>
-      <TextInput
-        onChangeText={setLogin}
-        value={login}
-      />
-    <FlatButton onPress={handleSubmit} text='submit' />
-    </View>
+    <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
+      <View style={globalStyles.container}>
+        <TextInput
+          label="Login"
+          onChangeText={setLogin}
+          value={login}
+          style={styles.textInput}
+        />
+      <FlatButton onPress={handleSubmit} text='submit' />
+      </View>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+  },
+  textInput: {     
+    marginTop: 150,
+    marginBottom:10, 
+    backgroundColor: "#E7F0FE",
+  },
+});

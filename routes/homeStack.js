@@ -11,15 +11,16 @@ const screens = {
     screen: Login,
     navigationOptions: ({ navigation }) => {
       return {
-        headerTitle: () => <Header title='Login to 42 Looker' />
+        headerTitle: () => <Header title='42 Looker' />
       }
     }
   },  
-  SelectUser: {
+  Home: {
     screen: SelectUser,
     navigationOptions: ({ navigation }) => {
       return {
-        headerTitle: () => <Header title='42 Looker' />
+        headerTitle: () => <Header title='42 Looker' />,
+        headerLeft: ()=> null,
       }
     },
   },
