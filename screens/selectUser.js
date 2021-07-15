@@ -128,16 +128,16 @@ export default function Home({ navigation }) {
       setIsLoading(true)
       const token = await verifyToken()
       const user = await getUserIdFrom42API(token)
-      const user_id = user[0].id
-      console.log(isLoading);
-      const info = await getUserInfoFrom42API(token, user_id)
+      const info = await getUserInfoFrom42API(token, user[0].id)
       setIsLoading(false)
       navigation.navigate('ReviewDetails', {login: login, userInfo: info})
     }
   }
 
+  let button = isLoading ? <ActivityIndicator /> : <FlatButton onPress={handleSubmit} text='submit' />
+
   return (
-    <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
+      <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
       <View style={globalStyles.container}>
         <TextInput
           label="Login"
@@ -145,10 +145,10 @@ export default function Home({ navigation }) {
           value={login}
           style={styles.textInput}
         />
-      <FlatButton onPress={handleSubmit} text='submit' />
+        {button}
       </View>
     </ImageBackground>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
