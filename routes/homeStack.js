@@ -4,14 +4,15 @@ import React from 'react';
 import Header from '../shared/header';
 import SelectUser from '../screens/selectUser';
 import Login from '../screens/login';
-import ReviewDetails from '../screens/reviewDetails';
+import StudentDetails from '../screens/studentDetails';
 
 const screens = {
   Login: {
     screen: Login,
     navigationOptions: ({ navigation }) => {
       return {
-        headerTitle: () => <Header title='42 Looker' />
+        headerTitle: () => <Header title='42 Looker' />, 
+        headerTransparent: true,
       }
     }
   },  
@@ -21,22 +22,24 @@ const screens = {
       return {
         headerTitle: () => <Header title='42 Looker' />,
         headerLeft: ()=> null,
+        headerTransparent: true,
       }
     },
   },
-  ReviewDetails: {
-    screen: ReviewDetails,
-    navigationOptions: {
-      title: 'User',
-    }
+  StudentDetails: {
+    screen: StudentDetails,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: () => <Header title='Student Details' />,
+      }
+    },
   },
 };
 
 // home stack navigator screens
 const HomeStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
-    headerTintColor: '#444',
-    headerStyle: { backgroundColor: '#eee', height: 60 }
+    headerStyle: { backgroundColor: '#1F1F25', height: 60 },
   }
 });
 

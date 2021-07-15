@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#00AFB1',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 200,
+        justifyContent: 'center',
+        marginTop: 250,
         flexDirection: 'row',
       },
       loginButtonText: {

@@ -23,15 +23,10 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#333',
+    color: '#FFFFFF',
     letterSpacing: 1,
   },
   headerTitle: {
     flexDirection: 'row'
-  },
-  headerImage: {
-    width: 26,
-    height: 26,
-    marginHorizontal: 10
   },
 });

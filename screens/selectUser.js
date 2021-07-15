@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ImageBackground, ImageBackgroundBase} from 'react-native';
+import { Text, StyleSheet, View, ImageBackground, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { globalStyles } from '../styles/global';
-import { MaterialIcons } from '@expo/vector-icons';
-import Card from '../shared/card';
 import { TextInput, ActivityIndicator, Colors } from 'react-native-paper';
 import FlatButton from '../shared/button.js';
 
 export default function Home({ navigation }) {
   const code = navigation.getParam('code');
   const [login, setLogin] = useState('');
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState('');
+  const [unknown, setUnknown] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const POST_body = {
     'grant_type': 'authorization_code',
@@ -108,9 +107,11 @@ export default function Home({ navigation }) {
         if (token != '') {
           console.log(token)
           const check = await getTokenInfo(token);
+          console.log(check);
+          /*if (check == )*/
           resolve(token)
         }
-        else {
+        if (token == '' /*|| check ==*/) {
           const new_token = await getTokenFrom42API()
           setToken(new_token);
           resolve(new_token)
@@ -124,20 +125,29 @@ export default function Home({ navigation }) {
   }
 
   const handleSubmit = async () => {
+    setUnknown(false)
     if (login != '') {
       setIsLoading(true)
       const token = await verifyToken()
       const user = await getUserIdFrom42API(token)
-      const info = await getUserInfoFrom42API(token, user[0].id)
-      setIsLoading(false)
-      navigation.navigate('ReviewDetails', {login: login, userInfo: info})
+      if (user[0] != undefined) {
+        const info = await getUserInfoFrom42API(token, user[0].id)
+        setIsLoading(false);
+        navigation.navigate('StudentDetails', {login: login, userInfo: info})
+      }
+      else {
+        setUnknown(true)
+        setIsLoading(false)
+      }
     }
   }
 
   let button = isLoading ? <ActivityIndicator /> : <FlatButton onPress={handleSubmit} text='submit' />
+  let errorMessage = unknown ? <Text style={styles.errorMessage}> This user can not be found ... </Text> : null
 
   return (
-      <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
+    <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={globalStyles.container}>
         <TextInput
           label="Login"
@@ -145,8 +155,10 @@ export default function Home({ navigation }) {
           value={login}
           style={styles.textInput}
         />
+        {errorMessage}
         {button}
       </View>
+      </TouchableWithoutFeedback>
     </ImageBackground>
     );
 }
@@ -157,8 +169,14 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textInput: {     
-    marginTop: 150,
-    marginBottom:10, 
+    marginTop: 220,
+    marginBottom: 15, 
     backgroundColor: "#E7F0FE",
   },
+  errorMessage: {
+    color:'#D7636F',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 4,
+  }
 });
