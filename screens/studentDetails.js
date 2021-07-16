@@ -49,7 +49,7 @@ export default function ReviewDetails({ navigation }) {
                 <Text style={styles.mainContent}> {email} </Text>
                 <Text style={styles.mainContent}> {location} </Text>
                 <Text style={styles.mainContent}> Level {parseInt(level)} </Text>
-                <ProgressBar progress={level % 1}/>
+                <ProgressBar progress={level % 1}style={{marginBottom:4}}/>
               </Card>
             </View>
 
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   listingContent: {
-    flex: 1,
     flexDirection: "row", 
   },
   listingName: {
@@ -131,15 +130,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   mainContent: {
+    flex: 1,
     fontSize: 14,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
     color: '#EAEFF2',
-    padding: 2,
     fontWeight: 'bold',
   },
   tinyLogo: {
+    marginTop:10,
     width: 80,
     height: 80,
     justifyContent: 'center',

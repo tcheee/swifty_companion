@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
             console.log(code);
 
             WebBrowser.dismissBrowser();
-            navigation.navigate('Home', {code: code})
+            navigation.navigate('Home', {code: code, app_url: app_url})
         })
       }
   
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         justifyContent: 'center',
-        marginTop: 250,
         flexDirection: 'row',
       },
       loginButtonText: {

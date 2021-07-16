@@ -6,6 +6,7 @@ import FlatButton from '../shared/button.js';
 
 export default function Home({ navigation }) {
   const code = navigation.getParam('code');
+  const app_url = navigation.getParam('app_url');
   const [login, setLogin] = useState('');
   const [token, setToken] = useState('');
   const [unknown, setUnknown] = useState(false);
@@ -15,7 +16,7 @@ export default function Home({ navigation }) {
     'client_id': 'c0d296f87ad3d2fd9c1980da5f055fb4ee7fae41830be1f5d6985bea22b84a36',
     'client_secret': '4631186c7cc1a5c7d206310ab2c04af3168cc0f41789173160cebaab61588233',
     'code': code,
-    'redirect_uri': 'exp://10.18.205.228:19000',
+    'redirect_uri': app_url,
   }
 
   const getUserInfoFrom42API = async (token, user_id) => {
@@ -92,7 +93,6 @@ export default function Home({ navigation }) {
           }), 
         });
         let json = await response.json();
-        console.log(json)
         resolve(json);
       } catch (error) {
         console.error(error);
@@ -104,14 +104,17 @@ export default function Home({ navigation }) {
   const verifyToken = () => {
     return new Promise(async (resolve, reject) => {
       try {
+        let check;
         if (token != '') {
-          console.log(token)
-          const check = await getTokenInfo(token);
-          console.log(check);
-          /*if (check == )*/
-          resolve(token)
+          check = await getTokenInfo(token);
+          if (check.expires_in_seconds > 0) {
+            resolve(token)
+          }
+          else {
+            reject('error')
+          }
         }
-        if (token == '' /*|| check ==*/) {
+        if (token == '' || check.expires_in_seconds == undefined) {
           const new_token = await getTokenFrom42API()
           setToken(new_token);
           resolve(new_token)
@@ -149,14 +152,14 @@ export default function Home({ navigation }) {
     <ImageBackground source={require('../assets/background.jpeg')} style={styles.background}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={globalStyles.container}>
-        <TextInput
-          label="Login"
-          onChangeText={setLogin}
-          value={login}
-          style={styles.textInput}
-        />
-        {errorMessage}
-        {button}
+          <TextInput
+            label="Login"
+            onChangeText={setLogin}
+            value={login}
+            style={styles.textInput}
+          />
+          {errorMessage}
+          {button}
       </View>
       </TouchableWithoutFeedback>
     </ImageBackground>
@@ -169,7 +172,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textInput: {     
-    marginTop: 220,
     marginBottom: 15, 
     backgroundColor: "#E7F0FE",
   },
