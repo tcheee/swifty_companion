@@ -15,7 +15,6 @@ export default function Login({ navigation }) {
         Linking.addEventListener('url', (event) => {
             let data = Linking.parse(event.url);
             let code = data.queryParams.code
-            console.log(code);
 
             WebBrowser.dismissBrowser();
             navigation.navigate('Home', {code: code, app_url: app_url})
