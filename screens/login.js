@@ -9,7 +9,6 @@ export default function Login({ navigation }) {
     const client_id = 'c0d296f87ad3d2fd9c1980da5f055fb4ee7fae41830be1f5d6985bea22b84a36'
     const url = 'https://api.intra.42.fr/oauth/authorize?client_id=' + client_id + '&redirect_uri=' + app_url + '&response_type=code'
 
-
     const handleLogin = async () => {
         WebBrowser.openBrowserAsync(url);
         Linking.addEventListener('url', (event) => {

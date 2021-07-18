@@ -110,9 +110,6 @@ export default function Home({ navigation }) {
           if (check.expires_in_seconds > 0) {
             resolve(token)
           }
-          else {
-            reject('error')
-          }
         }
         if (token == '' || check.expires_in_seconds == undefined) {
           const new_token = await getTokenFrom42API()
