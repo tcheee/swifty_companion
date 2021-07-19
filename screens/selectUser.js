@@ -14,7 +14,7 @@ export default function Home({ navigation }) {
   const POST_body = {
     'grant_type': 'authorization_code',
     'client_id': 'c0d296f87ad3d2fd9c1980da5f055fb4ee7fae41830be1f5d6985bea22b84a36',
-    'client_secret': '4631186c7cc1a5c7d206310ab2c04af3168cc0f41789173160cebaab61588233',
+    'client_secret': //insert client secret here,
     'code': code,
     'redirect_uri': app_url,
   }
